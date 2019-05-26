@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.moviesstage1">
+    package="com.example.moviesstage1copy">
 <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
@@ -9,8 +9,11 @@
         android:roundIcon="@drawable/popular2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.moviesstage1.MovieDetails"></activity>
-        <activity android:name="com.example.moviesstage1.MainActivity">
+        <activity android:name="com.example.moviesstage1copy.MovieDetails"
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleInstance"></activity>
+        <activity android:name="com.example.moviesstage1copy.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

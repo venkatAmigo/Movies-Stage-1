@@ -1,4 +1,4 @@
-package com.example.moviesstage1.model;
+package com.example.moviesstage1copy.model;
 
 public class MovieModel  {
     private static final String DATE_FORMAT = "dd-MM-yyyy";
@@ -8,6 +8,16 @@ public class MovieModel  {
     private String mOverview;
     private String mVoteAverage;
     private String mReleaseDate;
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    private int movieId;
 
     public MovieModel() {
     }

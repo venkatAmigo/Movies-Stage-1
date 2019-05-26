@@ -1,4 +1,4 @@
-package com.example.moviesstage1.Network;
+package com.example.moviesstage1copy.Network;
 
 import android.net.Uri;
 

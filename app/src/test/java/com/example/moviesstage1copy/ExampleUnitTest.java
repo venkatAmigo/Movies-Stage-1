@@ -1,4 +1,4 @@
-package com.example.moviesstage1;
+package com.example.moviesstage1copy;
 
 import org.junit.Test;
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Moviesstage1</string>
+    <string name="app_name">Moviesstage1Copy</string>
     <string name="favourites">Favourites</string>
     <string name="populer">Popular</string>
     <string name="top_rated">Top rated</string>
@@ -11,4 +11,8 @@
     <string name="add_to_favourites">Add to favourites</string>
     <string name="over_view">Over view</string>
     <string name="overall">overall</string>
+    <string name="video">video tittle</string>
+    <string name="reviews_label">Reviews</string>
+    <string name="trailers_label">Trailers</string>
+    <string name="add_to_fav_label">Add to Favourites</string>
 </resources>

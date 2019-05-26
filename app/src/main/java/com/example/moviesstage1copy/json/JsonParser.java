@@ -1,6 +1,7 @@
-package com.example.moviesstage1.json;
+package com.example.moviesstage1copy.json;
 
-import com.example.moviesstage1.model.MovieModel;
+import com.example.moviesstage1copy.model.MovieModel;
+import com.example.moviesstage1copy.model.VideoModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,8 +29,10 @@ public class JsonParser {
                  movies[i].setPosterPath(movieInfo.getString(POSTER_PATH));
                  movies[i].setOverview(movieInfo.getString(OVERVIEW));
                 Double test=movieInfo.getDouble(VOTE_AVERAGE);
+                int id=movieInfo.getInt("id");
                 String vt=test.toString();
                 movies[i].setVoteAverage(vt);
+                movies[i].setMovieId(id);
                 movies[i].setReleaseDate(movieInfo.getString(RELEASE_DATE));
             }
             return movies;
@@ -39,6 +42,26 @@ public class JsonParser {
         }
         return null;
 
+    }
+    public VideoModel[] parseVideoJson(String j)
+    {
+        JSONObject root = null;
+        try {
+            root = new JSONObject(j);
+            JSONArray results = root.getJSONArray("results");
+            VideoModel[] videos = new VideoModel[results.length()];
+            for(int i=0;i<results.length();i++)
+            {
+                videos[i]=new VideoModel();
+                JSONObject result_item = results.getJSONObject(i);
+                videos[i].setKey( result_item.getString("key"));
+                videos[i].setName(result_item.getString("name"));
+            }
+            return  videos;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  null;
     }
 
 }

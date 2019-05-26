@@ -1,6 +1,9 @@
-package com.example.moviesstage1;
+package com.example.moviesstage1copy;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,7 +25,13 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.moviesstage1.model.MovieModel;
+import com.example.moviesstage1copy.database_classes.FavRoomDatabase;
+import com.example.moviesstage1copy.database_classes.FavViewModel;
+import com.example.moviesstage1copy.database_classes.FavouriteMovies;
+import com.example.moviesstage1copy.model.MovieModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<MovieModel[]> {
@@ -32,12 +41,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         MyAdapter myAdapter;
         String sort_order = "popular";
         GridLayout g;
-
+        FavViewModel favViewModel;
+        List<FavouriteMovies> results;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(getSupportLoaderManager().getLoader(LOADERID)!=null) {
+        favViewModel = ViewModelProviders.of(this).get(FavViewModel.class);
+        if(getSupportLoaderManager().getLoader(LOADERID)!=null)
+        {
             getSupportLoaderManager().initLoader(LOADERID, null, this);
         }
         else
@@ -95,6 +107,35 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             bundle.putString("SORT_ORDER",sort_order);
             getSupportLoaderManager().restartLoader(LOADERID,bundle,this);
         }
+        if(item.getItemId()==R.id.favourites)
+        {
+            favViewModel.getAllWords().observe(this, new Observer<List<FavouriteMovies>>() {
+                @Override
+                public void onChanged(@Nullable List<FavouriteMovies> fav)
+                {
+                    results=fav;
+                    if(fav!=null) {//movieModel=fav.toArray(movieModel);
+                        MovieModel[] movies = new MovieModel[fav.size()];
+                        for (int i = 0; i < fav.size(); i++) {
+                            movies[i] = new MovieModel();
+                            movies[i].setOriginalTitle(fav.get(i).getTitle());
+                            movies[i].setMovieId(fav.get(i).getId());
+                            movies[i].setPosterPath(fav.get(i).getPosterpath());
+                            movies[i].setOverview(fav.get(i).getOverview());
+                            movies[i].setVoteAverage(fav.get(i).getRating());
+                            movies[i].setReleaseDate(fav.get(i).getRelease_date());
+
+                        }
+
+                        movieModel = movies;
+                    }
+                    //myAdapter = new MyAdapter(MainActivity.this,fav.toArray(movieModel));
+                    //recyclerView.setAdapter(myAdapter);
+                    //recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+                }
+            });
+            setupRecyclerAdapter(this.movieModel);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -141,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 public void onClick(View v) {
                     Intent intent=new Intent(context,MovieDetails.class);
                     int position=(int)v.getTag();
+                    intent.putExtra("id",movieModel[position].getMovieId());
                     intent.putExtra("poster",movieModel[position].getDetailPosterPath());
                     intent.putExtra("release",movieModel[position].getReleaseDate());
                     intent.putExtra("vote",movieModel[position].getVoteAverage());
@@ -175,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         @Override
         public int getItemCount() {
             if(movieModel!=null)
+
             return movieModel.length;
             return 0;
         }
@@ -188,3 +231,4 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 }
+

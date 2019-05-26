@@ -1,15 +1,14 @@
-package com.example.moviesstage1;
+package com.example.moviesstage1copy;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.moviesstage1.Network.NetworkUtils;
-import com.example.moviesstage1.json.JsonParser;
-import com.example.moviesstage1.model.MovieModel;
+import com.example.moviesstage1copy.Network.NetworkUtils;
+import com.example.moviesstage1copy.json.JsonParser;
+import com.example.moviesstage1copy.model.MovieModel;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
